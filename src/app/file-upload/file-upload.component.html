@@ -1,0 +1,30 @@
+<div class="container mt-5">
+    <div class="text-center mb-4">
+      <h1 class="display-4 text-primary">Student Management System</h1>
+      <p class="lead">Please upload the list of students (Excel file) in your class to proceed.</p>
+    </div>
+    <div class="card shadow-lg p-4">
+      <h2 class="text-center mb-4">Upload Student List </h2>
+      <div class="drop-zone text-center p-4 border border-primary rounded" 
+           (dragover)="onDragOver($event)" 
+           (drop)="onDrop($event)">
+        <p *ngIf="!selectedFile" class="text-muted">Drag & drop an Excel file here or click to select.</p>
+        <p *ngIf="selectedFile" class="text-success">Selected: {{ selectedFile.name }}</p>
+      </div>
+      <input type="file" #fileInput class="form-control mt-3" 
+             (change)="onFileSelected($event)" accept=".xlsx, .xls"/>
+      <button class="btn btn-primary w-100 mt-3" 
+              [disabled]="!selectedFile || isUploading" 
+              (click)="uploadFile()">
+        <span *ngIf="!isUploading">📤 Upload</span>
+        <span *ngIf="isUploading" class="spinner-border spinner-border-sm"></span> 
+      </button>
+      <div *ngIf="uploadSuccess" class="alert alert-success mt-3">
+        File uploaded successfully!
+      </div>
+      <div *ngIf="uploadError" class="alert alert-danger mt-3">
+        {{ uploadError }}
+      </div>
+    </div>
+  </div>
+  
